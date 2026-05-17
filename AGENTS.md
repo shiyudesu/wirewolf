@@ -112,38 +112,25 @@ wirewolf/
 
 ### 本地开发
 
+**后端一键启动**（自动检测 PostgreSQL、执行迁移、启动服务）：
+
 ```bash
 cd wirewolf
+./start_backend_pg.sh
+```
 
-# 后端
-cd backend
+脚本会自动：启动 PostgreSQL（若未运行）→ 执行 `alembic upgrade head` → 启动 FastAPI 服务。
 
-# 安装依赖（推荐用虚拟环境）
-pip install -e ".[dev]"
+**前端编译**（另一个终端）：
 
-# 或手动安装核心依赖
-# pip install fastapi uvicorn pydantic openai httpx structlog transitions \
-#     python-dotenv sqlalchemy[asyncio] asyncpg alembic pandas numpy plotly
-
-# 配置环境变量
-cp .env.example .env
-# 编辑 .env：填入 LLM_API_KEY、DATABASE_URL 等
-
-# 启动 PostgreSQL（如使用 Docker Compose）
-# docker-compose up -d postgres
-
-# 数据库迁移
-alembic upgrade head
-
-# 启动 FastAPI
-python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-
-# 前端（另一个终端）
-cd frontend
+```bash
+cd wirewolf/frontend
 npm install
 npm run build
 # 访问 http://localhost:8000/
 ```
+
+> FastAPI 启动后会自动挂载 `frontend/dist/`，前后端一体化访问。
 
 ### Docker 一键启动
 

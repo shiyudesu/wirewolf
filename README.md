@@ -59,37 +59,49 @@ docker-compose up --build
 
 ### 方式二：本地开发
 
+**后端一键启动**（自动检测 PostgreSQL、执行迁移、启动服务）：
+
 ```bash
 cd wirewolf
 
-# ---- 后端 ----
-cd backend
+# 首次启动前：安装依赖并初始化
+# cd backend && pip install -e ".[dev]" && cd ..
 
-# 创建虚拟环境（推荐）
-python3 -m venv .venv
-source .venv/bin/activate  # Windows: .venv\Scripts\activate
+./start_backend_pg.sh
+```
 
-# 安装依赖
-pip install -e ".[dev]"
-# 或手动安装核心依赖：
-# pip install fastapi uvicorn pydantic openai httpx structlog transitions \
-#     python-dotenv sqlalchemy[asyncio] asyncpg alembic pandas numpy plotly
+脚本会自动：启动 PostgreSQL（若未运行）→ 执行 `alembic upgrade head` → 启动 FastAPI 服务。
 
-# 配置环境变量
-cp .env.example .env
-# 编辑 .env：填入 LLM_API_KEY、DATABASE_URL（如 postgresql+asyncpg://...）
+**前端编译**（另一个终端）：
 
-# 数据库迁移（首次运行或表结构更新时）
-alembic upgrade head
-
-# 启动 FastAPI 服务
-python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
-
-# ---- 前端（另一个终端）----
-cd frontend
+```bash
+cd wirewolf/frontend
 npm install
 npm run build
 # 访问 http://localhost:8000/
+```
+
+> FastAPI 启动后会自动挂载 `frontend/dist/`，前后端一体化访问。
+
+**手动配置（如需自定义）**：
+
+```bash
+cd wirewolf/backend
+
+# 虚拟环境 + 依赖
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -e ".[dev]"
+
+# 环境变量
+cp .env.example .env
+# 编辑 .env 填入 LLM_API_KEY、DATABASE_URL 等
+
+# 数据库迁移
+alembic upgrade head
+
+# 启动
+python3 -m uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
 > 后端启动时会自动检测 `frontend/dist/` 目录并挂载到根路径 `/`，实现前后端一体化访问。
