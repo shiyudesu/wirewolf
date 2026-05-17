@@ -1,0 +1,88 @@
+# ========================== 环境变量 & 密钥 ==========================
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ========================== Python ==========================
+# 虚拟环境
+.venv/
+venv/
+ENV/
+env/
+
+# Python 缓存
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# 测试 & 覆盖率
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+
+# mypy / ruff / pylint
+.mypy_cache/
+.dmypy.json
+.ruff_cache/
+.pylint.d/
+
+# ========================== Node.js / 前端 ==========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.local
+
+# 前端构建产物（根目录级别也忽略）
+frontend/dist/
+frontend/dist-ssr/
+
+# ========================== 数据库 & 本地数据 ==========================
+*.db
+*.db-journal
+*.sqlite
+*.sqlite3
+leaderboard.db
+
+# 对局日志（JSON Lines 是运行时生成的）
+logs/games/*.jsonl
+
+# ========================== IDE & 编辑器 ==========================
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# ========================== 操作系统 ==========================
+Thumbs.db

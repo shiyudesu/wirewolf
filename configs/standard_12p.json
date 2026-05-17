@@ -1,0 +1,8 @@
+{
+  "player_count": 12,
+  "werewolf_count": 4,
+  "seer_count": 1,
+  "witch_count": 1,
+  "hunter_count": 1,
+  "description": "标准12人局：4狼+4神+4民"
+}
